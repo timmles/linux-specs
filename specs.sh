@@ -30,7 +30,7 @@ serial_number=$(sudo dmidecode -s system-serial-number)
 processor=$(sudo dmidecode -s processor-version)
 
 # using https://stackoverflow.com/questions/6481005/how-to-obtain-the-number-of-cpus-cores-in-linux-from-the-command-line
-core_count=$(grep ^cpu\\scores /proc/cpuinfo | uniq |  awk '{print $4}')
+core_count=$(sudo dmidecode -t processor | awk -F': ' '/Core Count/ {print($2);}')
 
 # using free to display the amount of free and use memory
 # -g, --gibi - Display the amount of memory in gibibytes.
