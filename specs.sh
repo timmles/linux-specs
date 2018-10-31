@@ -29,6 +29,9 @@ serial_number=$(sudo dmidecode -s system-serial-number)
 # using dmidecode special keyword for processor version
 processor=$(sudo dmidecode -s processor-version)
 
+# using https://stackoverflow.com/questions/6481005/how-to-obtain-the-number-of-cpus-cores-in-linux-from-the-command-line
+core_count=$(grep ^cpu\\scores /proc/cpuinfo | uniq |  awk '{print $4}')
+
 # using free to display the amount of free and use memory
 # -g, --gibi - Display the amount of memory in gibibytes.
 #
@@ -56,6 +59,7 @@ echo "Make & Model:  $make_model"
 echo "Serial number: $serial_number"
 echo "************************************************************"
 echo "CPU:           $processor"
+echo "Core Count:    $core_count"
 echo "RAM size:      $ram_size GB"
 echo "HDD size:      $hdd_size"
 echo "HDD type:      $hdd_type"
