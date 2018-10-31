@@ -29,8 +29,10 @@ serial_number=$(sudo dmidecode -s system-serial-number)
 # using dmidecode special keyword for processor version
 processor=$(sudo dmidecode -s processor-version)
 
-# using https://stackoverflow.com/questions/6481005/how-to-obtain-the-number-of-cpus-cores-in-linux-from-the-command-line
+# using dmidecode processor information
+# then awk with the delimiter as type ": ", with regex for exact words on that line (not from the start of the line because of dmidecode formating) and print 2nd column
 core_count=$(sudo dmidecode -t processor | awk -F': ' '/Core Count/ {print($2);}')
+thread_count=$(sudo dmidecode -t processor | awk -F': ' '/Thread Count/ {print($2);}')
 
 # using free to display the amount of free and use memory
 # -g, --gibi - Display the amount of memory in gibibytes.
@@ -53,18 +55,24 @@ if [ $(cat /sys/block/sda/queue/rotational) -eq 0 ];
     else hdd_type="HDD";
 fi
 
+# adding some display swag
+# tput setaf 1 - sets the colour to red
+# tput bold - sets the font to bold
+# tput sgr0 - sets back to terminal default
+
 echo
 echo '************************************************************'
-echo "Make & Model:  $make_model"
-echo "Serial number: $serial_number"
+echo "$(tput setaf 1 && tput bold) Make & Model: $(tput sgr0) $make_model"
+echo "$(tput setaf 1 && tput bold) Serial number: $(tput sgr0) $serial_number"
 echo "************************************************************"
-echo "CPU:           $processor"
-echo "Core Count:    $core_count"
-echo "RAM size:      $ram_size GB"
-echo "HDD size:      $hdd_size"
-echo "HDD type:      $hdd_type"
+echo "$(tput setaf 1 && tput bold) CPU: $(tput sgr0) $processor"
+echo "$(tput setaf 1 && tput bold) Core count: $(tput sgr0) $core_count"
+echo "$(tput setaf 1 && tput bold) Thread count: $(tput sgr0) $thread_count"
+echo "$(tput setaf 1 && tput bold) RAM size: $(tput sgr0) ${ram_size}GB"
+echo "$(tput setaf 1 && tput bold) HDD size: $(tput sgr0) $hdd_size"
+echo "$(tput setaf 1 && tput bold) HDD type: $(tput sgr0) $hdd_type"
 echo "************************************************************"
 echo
 echo
-echo "Make & Model", "Serial number", "CPU", "Core Count", "RAM size", "HDD size", "HDD type"
-echo $make_model, $serial_number, $processor, $core_count, $ram_size GB, $hdd_size, $hdd_type
+echo "Make & Model", "Serial number", "CPU", "Core count", "Thread count", "RAM size", "HDD size", "HDD type"
+echo $make_model, $serial_number, $processor, $core_count, $thread_count, $ram_size GB, $hdd_size, $hdd_type
