@@ -50,6 +50,7 @@ if [ $(cat /sys/block/sda/queue/rotational) -eq 0 ];
     else hdd_type="HDD";
 fi
 
+echo
 echo '************************************************************'
 echo "Make & Model:  $make_model"
 echo "Serial number: $serial_number"
