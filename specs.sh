@@ -66,5 +66,5 @@ echo "HDD type:      $hdd_type"
 echo "************************************************************"
 echo
 echo
-echo "Make & Model", "Serial number", "CPU", "RAM size", "HDD size", "HDD type"
-echo $make_model, $serial_number, $processor, $ram_size GB, $hdd_size, $hdd_type
+echo "Make & Model", "Serial number", "CPU", "Core Count", "RAM size", "HDD size", "HDD type"
+echo $make_model, $serial_number, $processor, $core_count, $ram_size GB, $hdd_size, $hdd_type
